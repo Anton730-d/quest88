@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Питання 8</title>
+   <style>
+       body {
+           font-family: 'Roboto Mono', monospace;
+           background-color: #A1D1B1;
+           text-align: center;
+           color: #1C2529;
+           margin: 0;
+           padding: 0;
+       }
+       .container {
+           margin-top: 100px;
+           animation: fadeIn 2s ease-in-out;
+       }
+       h1 {
+           font-size: 36px;
+           animation: slideIn 1.5s ease-in-out;
+       }
+       form {
+           font-size: 20px;
+           color: #1C2529;
+       }
+       button {
+           padding: 10px 20px;
+           font-size: 18px;
+           background-color: #1C2529;
+           border: none;
+           color: #A1D1B1;
+           cursor: pointer;
+           transition: background-color 0.3s ease;
+           animation: bounceIn 2s ease;
+       }
+       button:hover {
+           background-color: #0056b3;
+       }
+       .confetti {
+           position: absolute;
+           width: 10px;
+           height: 10px;
+           background-color: #FFCC00;
+           border-radius: 50%;
+           animation: confetti 2s ease-out forwards;
+       }
+       .shake {
+           animation: shake 0.5s ease-in-out;
+       }
+       .final-page {
+           display: none;
+           padding: 50px;
+       }
+       .typing-effect {
+           display: inline-block;
+           overflow: hidden;
+           white-space: nowrap;
+           border-right: 2px solid black;
+           animation: typing 3s steps(30, end), blink-caret 0.5s step-end infinite;
+       }
+       @keyframes confetti {
+           to {
+               transform: translateY(100vh) rotate(360deg);
+               opacity: 0;
+           }
+       }
+       @keyframes shake {
+           0%, 100% { transform: translateX(0); }
+           10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+           20%, 40%, 60%, 80% { transform: translateX(10px); }
+       }
+       @keyframes fadeIn {
+           from { opacity: 0; }
+           to { opacity: 1; }
+       }
+       @keyframes slideIn {
+           from { transform: translateY(-50px); opacity: 0; }
+           to { transform: translateY(0); opacity: 1; }
+       }
+       @keyframes bounceIn {
+           0% { transform: scale(0.1); opacity: 0; }
+           60% { transform: scale(1.2); opacity: 1; }
+           100% { transform: scale(1); }
+       }
+       @keyframes typing {
+           from { width: 0 }
+           to { width: 100% }
+       }
+       @keyframes blink-caret {
+           from, to { border-color: transparent }
+           50% { border-color: black }
+       }
+   </style>
+</head>
+<body>
+   <div class="container">
+       <h1>Питання 8</h1>
+       <p>Якщо ти заходиш вперше, то 1 завдання біля 230к.</p>
+       <button onclick="showQuestion()">Продовжити</button>
+       
+       <div id="questionSection" style="display:none;">
+           <p>Яка найпопулярніша мова програмування?</p>
+           <form>
+               <input type="radio" name="answer" value="incorrect"> Java<br>
+               <input type="radio" name="answer" value="correct"> Python<br>
+               <input type="radio" name="answer" value="incorrect"> C++<br>
+               <input type="radio" name="answer" value="incorrect"> JavaScript<br><br>
+               <button type="button" onclick="checkAnswer()">Продовжити</button>
+           </form>
+           <p id="feedback"></p>
+       </div>
+
+       <div id="finalPage" class="final-page">
+           <h1 class="typing-effect" style="font-size: 5rem; margin-bottom: 50px;">Код Майбутнього</h1>
+           <p style="font-size: 1.5rem; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+               Вітаємо, мужній дослідник! Ти успішно подолав всі випробування нашого квесту. 
+               Твій розум, логіка та наполегливість допомогли тобі розкрити таємниці та пройти складний шлях. 
+               Ти показав, що маєш неабиякий потенціал і здатність долати складні завдання. 
+               Нехай цей квест буде лише початком твого захоплюючого шляху в світі знань та можливостей.
+           </p>
+       </div>
+   </div>
+
+   <script>
+       function showQuestion() {
+           document.querySelector('button').style.display = 'none';
+           document.getElementById('questionSection').style.display = 'block';
+       }
+
+       function createConfetti() {
+           for (var i = 0; i < 100; i++) {
+               var confetti = document.createElement("div");
+               confetti.classList.add("confetti");
+               confetti.style.left = Math.random() * window.innerWidth + "px";
+               confetti.style.top = Math.random() * window.innerHeight + "px";
+               confetti.style.backgroundColor = "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+               document.body.appendChild(confetti);
+
+               setTimeout(function() {
+                   confetti.remove();
+               }, 2000);
+           }
+       }
+
+       function shakeScreen() {
+           document.body.classList.add('shake');
+           setTimeout(function() {
+               document.body.classList.remove('shake');
+           }, 500);
+       }
+
+       function checkAnswer() {
+           var radios = document.getElementsByName('answer');
+           var feedback = document.getElementById('feedback');
+           for (var i = 0; i < radios.length; i++) {
+               if (radios[i].checked) {
+                   if (radios[i].value === 'correct') {
+                       document.getElementById('questionSection').style.display = 'none';
+                       document.getElementById('finalPage').style.display = 'block';
+                       createConfetti();
+                   } else {
+                       feedback.innerHTML = 'Неправильна відповідь. Спробуй ще раз!';
+                       feedback.style.color = 'red';
+                       shakeScreen();
+                   }
+               }
+           }
+       }
+   </script>
+</body>
+</html>
